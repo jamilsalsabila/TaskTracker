@@ -1,0 +1,19 @@
+# Database config (berisi kredensial, jangan di-commit)
+api/db.php
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Archive & backup
+*.zip
+*.tar.gz
+*.sql.bak
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
