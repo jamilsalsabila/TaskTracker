@@ -1,0 +1,385 @@
+/* ===== Base ===== */
+*, *::before, *::after { box-sizing: border-box; }
+
+[x-cloak] { display: none !important; }
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f1f5f9;
+}
+
+/* ===== Scrollbar ===== */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #f1f5f9; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* ===== Layout ===== */
+.sidebar {
+    width: 240px;
+    min-height: 100vh;
+    background: #1e293b;
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+}
+
+.main-content {
+    flex: 1;
+    min-width: 0;
+    min-height: 100vh;
+}
+
+/* ===== Nav items ===== */
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    color: #94a3b8;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    margin: 2px 0;
+}
+.nav-item:hover { background: rgba(255,255,255,0.08); color: #e2e8f0; }
+.nav-item.active { background: #6366f1; color: #fff; }
+.nav-item svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+/* ===== Bottom nav (mobile) ===== */
+.bottom-nav {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: #fff;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    z-index: 50;
+    padding-bottom: env(safe-area-inset-bottom);
+}
+.bottom-nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 4px 8px;
+    color: #94a3b8;
+    font-size: 10px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.15s;
+    gap: 3px;
+}
+.bottom-nav-item svg { width: 20px; height: 20px; }
+.bottom-nav-item.active { color: #6366f1; }
+
+/* ===== Cards ===== */
+.stat-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    border: 1px solid #f1f5f9;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.07); }
+
+.task-card {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #f1f5f9;
+    padding: 16px;
+    transition: box-shadow 0.15s, transform 0.15s;
+}
+.task-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); transform: translateY(-1px); }
+
+/* ===== Priority bar ===== */
+.priority-bar { width: 4px; border-radius: 2px; }
+.priority-bar.urgent { background: #ef4444; }
+.priority-bar.high   { background: #f97316; }
+.priority-bar.medium { background: #6366f1; }
+.priority-bar.low    { background: #22c55e; }
+
+/* ===== Status badge ===== */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 10px;
+    border-radius: 9999px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+.badge-todo       { background: #f1f5f9; color: #64748b; }
+.badge-in_progress{ background: #fef3c7; color: #b45309; }
+.badge-review     { background: #dbeafe; color: #1d4ed8; }
+.badge-done       { background: #dcfce7; color: #15803d; }
+.badge-urgent     { background: #fee2e2; color: #b91c1c; }
+.badge-high       { background: #ffedd5; color: #c2410c; }
+.badge-medium     { background: #e0e7ff; color: #4338ca; }
+.badge-low        { background: #dcfce7; color: #15803d; }
+
+/* ===== Progress bar ===== */
+.progress-bar-track {
+    height: 6px;
+    background: #e2e8f0;
+    border-radius: 9999px;
+    overflow: hidden;
+}
+.progress-bar-fill {
+    height: 100%;
+    border-radius: 9999px;
+    transition: width 0.4s ease;
+}
+
+/* ===== Modal ===== */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 100;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+@media (min-width: 640px) {
+    .modal-overlay { align-items: center; }
+}
+.modal-box {
+    background: #fff;
+    border-radius: 24px 24px 0 0;
+    width: 100%;
+    max-width: 560px;
+    max-height: 92vh;
+    overflow-y: auto;
+    padding: 28px 24px;
+    animation: slide-up 0.25s ease;
+}
+@media (min-width: 640px) {
+    .modal-box {
+        border-radius: 24px;
+        margin: 16px;
+    }
+}
+@keyframes slide-up {
+    from { transform: translateY(40px); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* ===== Form inputs ===== */
+.form-input {
+    width: 100%;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 9px 12px;
+    font-size: 14px;
+    color: #1e293b;
+    background: #fafafa;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    outline: none;
+}
+.form-input:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+    background: #fff;
+}
+.form-input::placeholder { color: #94a3b8; }
+
+textarea.form-input { resize: vertical; min-height: 80px; }
+
+.form-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 5px;
+}
+
+/* ===== Buttons ===== */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    border: none;
+}
+.btn-primary { background: #6366f1; color: #fff; }
+.btn-primary:hover { background: #4f46e5; box-shadow: 0 4px 12px rgba(99,102,241,0.3); }
+.btn-danger  { background: #ef4444; color: #fff; }
+.btn-danger:hover { background: #dc2626; }
+.btn-ghost   { background: transparent; color: #64748b; border: 1.5px solid #e2e8f0; }
+.btn-ghost:hover { background: #f8fafc; color: #374151; }
+
+/* ===== Gantt ===== */
+.gantt-wrapper {
+    overflow-x: auto;
+    border-radius: 12px;
+    background: #fff;
+}
+.gantt .bar-wrapper .bar { border-radius: 6px; }
+.gantt .bar-label { font-size: 12px; }
+
+/* Gantt task colors by status */
+.gantt-todo      .bar { fill: #6366f1 !important; }
+.gantt-in_progress .bar { fill: #f59e0b !important; }
+.gantt-review    .bar { fill: #3b82f6 !important; }
+.gantt-done      .bar { fill: #22c55e !important; }
+
+/* ===== Kanban ===== */
+.kanban-board {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
+@media (min-width: 768px) {
+    .kanban-board { grid-template-columns: repeat(4, 1fr); }
+}
+
+.kanban-column {
+    background: #f8fafc;
+    border-radius: 14px;
+    padding: 12px;
+    min-height: 200px;
+}
+.kanban-column-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.kanban-cards {
+    min-height: 100px;
+}
+
+.kanban-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 8px;
+    border: 1.5px solid #f1f5f9;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    cursor: grab;
+    transition: box-shadow 0.15s, transform 0.1s;
+}
+.kanban-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); transform: translateY(-1px); }
+.kanban-card:active { cursor: grabbing; }
+
+/* SortableJS ghost / chosen */
+.sortable-ghost { opacity: 0.35; }
+.sortable-chosen { box-shadow: 0 8px 24px rgba(99,102,241,0.25) !important; }
+
+/* ===== Notification toast ===== */
+.toast {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%) translateY(0);
+    z-index: 200;
+    padding: 12px 22px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    min-width: 200px;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+}
+@media (min-width: 640px) { .toast { bottom: 24px; } }
+.toast-success { background: #10b981; }
+.toast-error   { background: #ef4444; }
+.toast-info    { background: #6366f1; }
+
+/* ===== Overdue indicator ===== */
+.overdue { color: #ef4444 !important; }
+
+/* ===== Empty state ===== */
+.empty-state {
+    text-align: center;
+    padding: 60px 24px;
+    color: #94a3b8;
+}
+.empty-state svg { width: 64px; height: 64px; margin: 0 auto 16px; opacity: 0.4; }
+.empty-state p { font-size: 15px; }
+
+/* ===== Loading spinner ===== */
+@keyframes spin { to { transform: rotate(360deg); } }
+.spinner {
+    width: 36px; height: 36px;
+    border: 3px solid #e2e8f0;
+    border-top-color: #6366f1;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    margin: 40px auto;
+}
+
+/* ===== Flatpickr overrides ===== */
+.flatpickr-calendar { border-radius: 12px !important; box-shadow: 0 8px 32px rgba(0,0,0,0.12) !important; }
+.flatpickr-day.selected { background: #6366f1 !important; border-color: #6366f1 !important; }
+.flatpickr-day:hover { background: #e0e7ff !important; }
+
+/* ===== Range input (progress slider) ===== */
+input[type=range] {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    background: #e2e8f0;
+    border-radius: 9999px;
+    outline: none;
+    cursor: pointer;
+}
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: #6366f1;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 6px rgba(99,102,241,0.4);
+    cursor: pointer;
+}
+
+/* ===== Kanban mobile status select ===== */
+.kanban-status-select {
+    display: block;
+    margin-top: 8px;
+    width: 100%;
+    font-size: 12px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 6px 8px;
+    background: #fff;
+    color: #374151;
+    font-weight: 600;
+    cursor: pointer;
+}
+@media (min-width: 768px) {
+    .kanban-status-select { display: none; }
+}
+
+/* ===== Tooltip ===== */
+[data-tip] { position: relative; }
+[data-tip]::after {
+    content: attr(data-tip);
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1e293b;
+    color: #fff;
+    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s;
+    z-index: 10;
+}
+[data-tip]:hover::after { opacity: 1; }
